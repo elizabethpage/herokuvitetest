@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://course-review-d137f8c06075.herokuapp.com', // Your Heroku API URL
+        target: "https://herokuvitetest-5ab34e4d0009.herokuapp.com/api/courses", // Your Heroku API URL
         changeOrigin: true,
         secure: true,
       },
