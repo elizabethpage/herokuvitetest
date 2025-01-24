@@ -1,35 +1,33 @@
 import express from 'express';
 import path from 'path';
-import cors from 'cors'; // Import CORS
+import { fileURLToPath } from 'url';
 
 const app = express();
-const port = process.env.PORT || 5001;
 
-// Middleware to handle CORS
-app.use(cors());
+// Workaround for __dirname in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// Serve the API for courses (your database data)
-app.get('/api/courses', async (req, res) => {
-  try {
-    // You should replace this with the actual query to your database
-    // Example query to return courses data from your database
-    const courses = await getCoursesFromDatabase();  // Replace this with real database call
-    res.json(courses);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Error fetching courses');
-  }
-});
-
-// Serve static files (React app)
+// Serve the static files from the 'dist' folder
 app.use(express.static(path.join(__dirname, 'dist')));
 
-// Handle any routes that aren’t API calls and serve the React app
+// API route to handle courses (example)
+app.get('/api/courses', (req, res) => {
+  res.json([
+    { course_id: 1, course_name: 'Intro to Programming' },
+    { course_id: 2, course_name: 'Data Structures' },
+    // Add your actual courses data here
+  ]);
+});
+
+// Serve your app at the root
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+// Start the server
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
 });
+
 
