@@ -7,19 +7,14 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://herokuvitetest-5ab34e4d0009.herokuapp.com',  // Change to your Heroku API URL
-        changeOrigin: true,
-        secure: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-        configure: (proxy, options) => {
-          // Add this to fix CORS locally
-          proxy.on('proxyReq', (proxyReq, req, res) => {
-            proxyReq.setHeader('Access-Control-Allow-Origin', '*');
-          });
-        },
+        target: 'https://herokuvitetest-5ab34e4d0009.herokuapp.com',  // Your Heroku API URL
+        changeOrigin: true, // This allows the request to be sent to a different origin
+        secure: true, // You can keep this if your API uses HTTPS
+        rewrite: (path) => path.replace(/^\/api/, ''), // Optional: rewrites the path before sending the request
       },
     },
   },
 });
+
 
 
